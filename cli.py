@@ -73,6 +73,11 @@ def main() -> None:
         help="Skip public caller ID scraping (faster, no spam data)",
     )
     parser.add_argument(
+        "--no-dork",
+        action="store_true",
+        help="Skip web dork search (faster, no name/company data)",
+    )
+    parser.add_argument(
         "--no-cache",
         action="store_true",
         help="Ignore and do not write the local cache",
@@ -129,7 +134,7 @@ def main() -> None:
             console.print(f"[dim](cached)[/]")
             result = cached
         else:
-            result = aggregator.run(parsed, no_scrape=args.no_scrape)
+            result = aggregator.run(parsed, no_scrape=args.no_scrape, no_dork=args.no_dork)
             if not args.no_cache:
                 cache.put(parsed.e164, result)
 
